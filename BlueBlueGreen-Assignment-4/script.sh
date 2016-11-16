@@ -20,6 +20,9 @@ read major
 echo "What was the last food you ate?"
 read food
 
+echo "What is your username?"
+read username 
+
 # Saving the date the user answered the questions
 today() {
     date +%m-%d-%Y
@@ -45,8 +48,8 @@ echo $name,$color,$fear,$major,$food,$(today),$(UID) >> scriptanswers.csv
         
 # done < scriptanswers.csv | mysql -u aehaney -p scriptdatabase;
 
-mysql -u aehaney -p -H -e "LOAD DATA INFILE '/home/ubuntu/workspace/bluebluegreen/BlueBlueGreen-Assignment-4/scriptanswers.csv' IGNORE INTO TABLE scripttable FIELDS TERMINATED BY ',';" scriptdatabase
+mysql -u $username -p -H -e "LOAD DATA INFILE '/home/ubuntu/workspace/bluebluegreen/BlueBlueGreen-Assignment-4/scriptanswers.csv' IGNORE INTO TABLE scripttable FIELDS TERMINATED BY ',';" scriptdatabase
 
-mysqldump -u aehaney -p scriptdatabase > scriptdatabase.sql
+mysqldump -u $username -p scriptdatabase > scriptdatabase.sql
 
 # mysql -u aehaney -p -H -e "SELECT COUNT(*) FROM scripttable;" scriptdatabase
