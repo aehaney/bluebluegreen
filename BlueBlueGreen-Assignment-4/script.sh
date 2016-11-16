@@ -29,11 +29,24 @@ today() {
 echo "$(today)"
 
 # Creating a unique identifier for the User
-random()
+UID()
 {
     cat /proc/sys/kernel/random/uuid
     }
     
-  echo "$(random)"
+  echo "$(UID)"
     
-echo $(random),$(today),$name,$color,$fear,$major,$food >> scriptanswers.csv 
+echo $name,$color,$fear,$major,$food,$(today),$(UID) >> scriptanswers.csv
+
+# IFS=,
+# while read UID today name color fear major food
+#     do
+#         echo "INSERT INTO scripttable (Name,Color,Fear,Major,Food,Today,UID) VALUES ('$UID', '$today', '$name', '$color', '$fear', '$major', '$food');"
+        
+# done < scriptanswers.csv | mysql -u aehaney -p scriptdatabase;
+
+mysql -u aehaney -p -H -e "LOAD DATA INFILE '/home/ubuntu/workspace/bluebluegreen/BlueBlueGreen-Assignment-4/scriptanswers.csv' IGNORE INTO TABLE scripttable FIELDS TERMINATED BY ',';" scriptdatabase
+
+mysqldump -u aehaney -p scriptdatabase > scriptdatabase.sql
+
+# mysql -u aehaney -p -H -e "SELECT COUNT(*) FROM scripttable;" scriptdatabase
